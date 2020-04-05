@@ -26,6 +26,12 @@ class AuthAction extends Action {
             $this->respondWithData("Failed");
         }
 
-        return $this->respondWithData($this->authRepository->login($username, $password));
+        if (!$this->authRepository->login($username, $password)) {
+            return $this->respondWithData("Failed to login");
+        }
+
+        $_SESSION['token'] = $this->authRepository->getToken($username);
+
+        return $this->respondWithData($this->authRepository->getToken($username));
     }
 }

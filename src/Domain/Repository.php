@@ -17,11 +17,4 @@ class Repository {
 
         $this->database = new Database($dsn, $usr, $pwd);
     }
-    
-    public function inheritanceTest(): array {
-        $statement = $this->database->select()->from('users')->where(new Conditional("id", "=", 1));
-        $data = $statement->execute()->fetch();
-
-        return $data;
-    }
 }

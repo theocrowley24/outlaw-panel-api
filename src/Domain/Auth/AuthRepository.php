@@ -16,10 +16,29 @@ class AuthRepository extends Repository {
 
         $result = $statement->execute()->fetch();
 
-        if (password_verify($password, $result['password_hashed'])) {
-            return true;
+        if (!password_verify($password, $result['password_hashed'])) {
+            return false;
         }
 
-        return false;
+        $token = bin2hex(random_bytes(16));
+        $tokenStatement = $this->database
+        ->update(array("access_token" => $token))
+        ->table("users")
+        ->where(new Conditional("id", "=", $result['id']));
+
+        $tokenStatement->execute();
+
+        return true;
+    }
+
+    public function getToken(string $username): string {
+        $statement = $this->database
+        ->select(array("access_token"))
+        ->from('users')
+        ->where(new Conditional("username", "=", $username));
+
+        $result = $statement->execute()->fetch();
+
+        return $result['access_token'];
     }
 }
