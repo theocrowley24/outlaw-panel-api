@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
-use App\Application\Actions\Auth\AuthAction;
+use App\Application\Actions\Auth\LoginAuthAction;
+use App\Application\Middleware\AuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -20,11 +21,9 @@ return function (App $app) {
         $group->get('/{id}', ViewUserAction::class);
     });
 
-
-
     $app->group('/auth', function (Group $group) {
-        $group->post('/login', AuthAction::class);
-    });
+        $group->post('/login', LoginAuthAction::class);
+    })->add(AuthMiddleware::class);
 
     /**
      * Catch-all route to serve a 404 Not Found page if none of the routes match

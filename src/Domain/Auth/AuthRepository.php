@@ -41,4 +41,19 @@ class AuthRepository extends Repository {
 
         return $result['access_token'];
     }
+
+    public function checkToken(int $uid, string $authToken): bool {
+        $statement = $this->database
+        ->select(array("access_token"))
+        ->from('users')
+        ->where(new Conditional("id", "=", $uid));
+
+        $result = $statement->execute()->fetch();
+
+        if (strcmp($result['access_token'], $authToken) != 0) {
+            return false;
+        }
+
+        return true;
+    }
 }
