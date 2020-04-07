@@ -11,7 +11,7 @@ class Repository {
 
     public function __construct()
     {
-        $dsn = 'mysql:host=localhost;dbname=panel;charset=utf8';
+        $dsn = 'mysql:host=localhost;dbname=life;charset=utf8';
         $usr = 'root';
         $pwd = '12345';
 

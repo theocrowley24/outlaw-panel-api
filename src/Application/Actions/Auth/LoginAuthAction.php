@@ -21,6 +21,9 @@ class LoginAuthAction extends AuthAction {
 
         $_SESSION['token'] = $this->authRepository->getToken($username);
 
-        return $this->respondWithData($this->authRepository->getToken($username));
+        $data['uid'] = $this->authRepository->getUid($username);
+        $data['accessToken'] = $this->authRepository->getToken($username);
+
+        return $this->respondWithData($data);
     }
 }
