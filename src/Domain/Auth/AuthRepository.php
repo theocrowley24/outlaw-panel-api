@@ -31,11 +31,31 @@ class AuthRepository extends Repository {
         return true;
     }
 
+    public function logout(int $id): void {
+        $statement = $this->database
+        ->update(array("access_token" => ""))
+        ->table("users")
+        ->where(new Conditional("id", "=", $id));
+
+        $statement->execute();
+    }
+
     public function getToken(string $username): string {
         $statement = $this->database
         ->select(array("access_token"))
         ->from('users')
         ->where(new Conditional("username", "=", $username));
+
+        $result = $statement->execute()->fetch();
+
+        return $result['access_token'];
+    }
+
+    public function getTokenById(int $id): string {
+        $statement = $this->database
+        ->select(array("access_token"))
+        ->from('users')
+        ->where(new Conditional("id", "=", $id));
 
         $result = $statement->execute()->fetch();
 
