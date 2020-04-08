@@ -15,6 +15,10 @@ class CreateNewRankAction extends PermissionsAction {
 
         $rankId = $this->permissionsRepository->createNewRank($name);
 
+        if ($permissions == null) {
+            return $this->response;
+        }
+
         foreach ($permissions as $permissionId) {
             $this->permissionsRepository->addPermissionToRank($permissionId, $rankId);
         }
