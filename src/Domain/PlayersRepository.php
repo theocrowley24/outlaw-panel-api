@@ -12,7 +12,7 @@ class PlayersRepository extends Repository {
         ->select(array('*'))
         ->from('players');
 
-        $result = $statement->execute()->fetch();
+        $result = $statement->execute()->fetchAll();
 
         return $result;
     }
