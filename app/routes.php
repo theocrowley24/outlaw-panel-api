@@ -28,15 +28,16 @@ return function (App $app) {
     $app->group('/players', function(Group $group) {
         $group->get('/getAllPlayers', GetAllPlayersAction::class);
         $group->post('/getPlayerById', GetPlayerByIdAction::class);
-    })->add(AuthMiddleware::class)->add(PermissionsMiddleware::class);
+    })->add(AuthMiddleware::class)
+        ->add(PermissionsMiddleware::class);
 
     $app->group('/permissions', function(Group $group) {
         $group->post('/createNewRank', CreateNewRankAction::class);
         $group->post('/updateRank', UpdateRankAction::class);
         $group->post('/updateRankPermissions', UpdateRankPermissionsAction::class);
         $group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
-        $group->post('/getAllPermissions', GetAllPermissionsAction::class);
 
+        $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
     });
 

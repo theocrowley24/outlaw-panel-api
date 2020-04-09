@@ -77,7 +77,9 @@ class PermissionsRepository extends Repository {
         $statement = $this->database
             ->select(array('permission_id'))
             ->from('rank_permissions')
-            ->where(new Conditional("rank_id", "=", $rankId));
+            ->where(new Grouping("AND",
+                new Conditional("rank_id", "=", $rankId),
+                new Conditional("inactive", "=", 0)));
 
         return $statement->execute()->fetchAll();
     }
@@ -126,7 +128,33 @@ class PermissionsRepository extends Repository {
 
     public function rankHasPermission(int $rankId, int $permissionId): bool {
         $permissions = $this->getRankPermissionIds($rankId);
-        return in_array($permissionId, $permissions);
+
+        for ($i = 0; $i < sizeof($permissions); $i++) {
+            if ($permissions[$i]["permission_id"] == $permissionId) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+    
+    public function getPermissionId(string $route): int {
+        $statement = $this->database
+            ->select(array("id"))
+            ->from("permissions")
+            ->where(new Conditional("route", "=", $route));
+
+        return $statement->execute()->fetch()["id"];
+    }
+    
+    public function getRankId(int $id): int {
+        $statement = $this->database
+            ->select(array("rank_id"))
+            ->from("users")
+            ->where(new Conditional("id", "=", $id));
+
+        return $statement->execute()->fetch()["rank_id"];
     }
 
 }

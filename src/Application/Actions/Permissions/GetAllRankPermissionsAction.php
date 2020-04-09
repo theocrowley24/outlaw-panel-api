@@ -13,6 +13,6 @@ class GetAllRankPermissionsAction extends PermissionsAction
         $parsedBody = $this->request->getParsedBody();
         $rankId = $parsedBody['id'];
 
-        return $this->respondWithData($this->permissionsRepository->getRankPermissions($rankId));
+        return $this->respondWithData($this->permissionsRepository->getRankPermissionIds($rankId));
     }
 }
