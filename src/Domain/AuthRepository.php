@@ -21,6 +21,9 @@ class AuthRepository extends Repository {
         }
 
         $token = bin2hex(random_bytes(16));
+
+        $_SESSION["accessToken"] = $token;
+
         $tokenStatement = $this->database
         ->update(array("access_token" => $token))
         ->table("users")
@@ -48,7 +51,8 @@ class AuthRepository extends Repository {
 
         $result = $statement->execute()->fetch();
 
-        return $result['access_token'];
+        //return $result['access_token'];
+        return $_SESSION['accessToken'];
     }
 
     public function getTokenById(int $id): string {
@@ -59,7 +63,8 @@ class AuthRepository extends Repository {
 
         $result = $statement->execute()->fetch();
 
-        return $result['access_token'];
+        return $_SESSION['accessToken'];
+        //return $result['access_token'];
     }
 
     public function getUid(string $username): int {
@@ -85,6 +90,12 @@ class AuthRepository extends Repository {
             return false;
         }
 
-        return true;
+        return $_SESSION['accessToken'] === $authToken;
+
+        //return true;
+    }
+
+    public function verifyToken(string $authToken): bool {
+        return $_SESSION['accessToken'] === $authToken;
     }
 }

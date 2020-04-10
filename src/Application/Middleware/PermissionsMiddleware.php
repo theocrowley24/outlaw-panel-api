@@ -20,26 +20,16 @@ class PermissionsMiddleware implements Middleware {
 
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        // Get the root
         $route = $request->getUri()->getPath();
 
-/*
-        $test = new Response();
-        $test->getBody()->write("ROUTE: " . $route);
-        return $test;*/
-
-        // Get the permission id for that root
         $permissionId = $this->permissionsRepository->getPermissionId($route);
-        // Get the users group (id) and then the rank id
         $userId = intval($request->getHeader("uid")[0]);
         $rankId = intval($this->permissionsRepository->getRankId($userId));
-        // Check if rank_permissions table contains the permission id for that rank id (and not inactive)
+
         if ($this->permissionsRepository->rankHasPermission($rankId, $permissionId)) {
             return $handler->handle($request);
         }
 
         return (new Response())->withStatus(403);
-        // If it does then continue
-        // Else return with 403
     }
 }

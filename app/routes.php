@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\LoginAuthAction;
 use App\Application\Actions\Auth\LogoutAuthAction;
+use App\Application\Actions\Auth\VerifyTokenAction;
 use App\Application\Actions\Permissions\CreateNewRankAction;
 use App\Application\Actions\Permissions\GetAllPermissionGroups;
 use App\Application\Actions\Permissions\GetAllPermissionsAction;
@@ -20,11 +21,13 @@ use App\Application\Middleware\PermissionsMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
     $app->group('/auth', function (Group $group) {
         $group->post('/login', LoginAuthAction::class);
+        $group->post('/verify', VerifyTokenAction::class);
         $group->post('/logout', LogoutAuthAction::class)->add(AuthMiddleware::class);
     });//->add(AuthMiddleware::class);
 
@@ -38,14 +41,14 @@ return function (App $app) {
         $group->post('/createNewRank', CreateNewRankAction::class);
         $group->post('/updateRank', UpdateRankAction::class);
         $group->post('/updateRankPermissions', UpdateRankPermissionsAction::class);
-        $group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
+        //$group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
         $group->post('/getAllPermissionsWithRank', GetAllPermissionsWithRank::class);
         $group->post('/getUsersRank', GetUserRankAction::class);
 
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
         $group->get('/getAllPermissionGroups', GetAllPermissionGroups::class);
-    });
+    })->add(PermissionsMiddleware::class);
 
     /**
      * Catch-all route to serve a 404 Not Found page if none of the routes match
