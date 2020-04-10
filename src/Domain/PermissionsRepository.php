@@ -25,6 +25,15 @@ class PermissionsRepository extends Repository {
         return $result;
     }
 
+    public function getUserRank(int $userId): int {
+        $statement = $this->database
+            ->select(array("rank_id"))
+            ->from("users")
+            ->where(new Conditional("id", "=", $userId));
+
+        return $statement->execute()->fetch()["rank_id"];
+    }
+
     public function addPermissionToRank(int $permissionId, int $rankId): void {
         if ($this->rankHasPermission($rankId, $permissionId)) return;
 

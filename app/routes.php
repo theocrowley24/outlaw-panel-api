@@ -9,6 +9,7 @@ use App\Application\Actions\Permissions\GetAllPermissionsAction;
 use App\Application\Actions\Permissions\GetAllPermissionsWithRank;
 use App\Application\Actions\Permissions\GetAllRankPermissionsAction;
 use App\Application\Actions\Permissions\GetAllRanksAction;
+use App\Application\Actions\Permissions\GetUserRankAction;
 use App\Application\Actions\Permissions\UpdateRankAction;
 use App\Application\Actions\Permissions\UpdateRankPermissionsAction;
 use App\Application\Actions\Players\GetAllPlayersAction;
@@ -39,6 +40,7 @@ return function (App $app) {
         $group->post('/updateRankPermissions', UpdateRankPermissionsAction::class);
         $group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
         $group->post('/getAllPermissionsWithRank', GetAllPermissionsWithRank::class);
+        $group->post('/getUsersRank', GetUserRankAction::class);
 
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
