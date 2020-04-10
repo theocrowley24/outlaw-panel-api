@@ -4,7 +4,9 @@ declare(strict_types=1);
 use App\Application\Actions\Auth\LoginAuthAction;
 use App\Application\Actions\Auth\LogoutAuthAction;
 use App\Application\Actions\Permissions\CreateNewRankAction;
+use App\Application\Actions\Permissions\GetAllPermissionGroups;
 use App\Application\Actions\Permissions\GetAllPermissionsAction;
+use App\Application\Actions\Permissions\GetAllPermissionsWithRank;
 use App\Application\Actions\Permissions\GetAllRankPermissionsAction;
 use App\Application\Actions\Permissions\GetAllRanksAction;
 use App\Application\Actions\Permissions\UpdateRankAction;
@@ -36,9 +38,11 @@ return function (App $app) {
         $group->post('/updateRank', UpdateRankAction::class);
         $group->post('/updateRankPermissions', UpdateRankPermissionsAction::class);
         $group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
+        $group->post('/getAllPermissionsWithRank', GetAllPermissionsWithRank::class);
 
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
+        $group->get('/getAllPermissionGroups', GetAllPermissionGroups::class);
     });
 
     /**

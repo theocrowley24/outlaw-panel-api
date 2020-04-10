@@ -5,10 +5,26 @@ namespace App\Domain;
 
 use FaaPz\PDO\Clause\Grouping;
 use FaaPz\PDO\Clause\Join;
+use FaaPz\PDO\Clause\Method;
 use FaaPz\PDO\Database;
 use FaaPz\PDO\Clause\Conditional;
 
 class PermissionsRepository extends Repository {
+    public function getAllPermissionsWithRank(int $rankId): array {
+        $result = $this->database->query("SELECT 
+        permissions.id, 
+        permissions.`name`, 
+        permissions.group_id,
+        IF (
+            EXISTS(
+                SELECT * FROM rank_permissions WHERE rank_id = $rankId AND permission_id = permissions.id AND inactive = 0), \"true\", \"false\") 
+                AS rank_has
+        FROM permissions
+        WHERE inactive= 0;")->fetchAll();
+
+        return $result;
+    }
+
     public function addPermissionToRank(int $permissionId, int $rankId): void {
         if ($this->rankHasPermission($rankId, $permissionId)) return;
 
@@ -86,8 +102,16 @@ class PermissionsRepository extends Repository {
 
     public function getAllPermissions(): array {
         $statement = $this->database
-            ->select(array("id", "name"))
+            ->select(array("permissions.id", "permissions.name", "permissions.group_id"))
             ->from('permissions');
+
+        return $statement->execute()->fetchAll();
+    }
+
+    public function getAllPermissionGroups(): array {
+        $statement = $this->database
+            ->select(array("id", "name"))
+            ->from("permission_groups");
 
         return $statement->execute()->fetchAll();
     }
