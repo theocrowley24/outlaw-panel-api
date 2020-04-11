@@ -20,10 +20,10 @@ class LoginAuthAction extends AuthAction {
             return $this->respondWithData("Failed to login");
         }
 
-        $_SESSION['token'] = $this->authRepository->getToken($username);
+        $_SESSION['token'] = $this->authRepository->getToken();
 
         $data['uid'] = $this->authRepository->getUid($username);
-        $data['accessToken'] = $this->authRepository->getToken($username);
+        $data['accessToken'] = $this->authRepository->getToken();
 
         return $this->respondWithData($data);
     }
