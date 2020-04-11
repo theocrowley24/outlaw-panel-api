@@ -16,7 +16,7 @@ class LogoutAuthAction extends AuthAction {
 
         if (strcmp($accessToken, $actualToken) == 0) {
             $this->authRepository->logout($uid);
-            return $this->response;
+            return $this->respondWithData("Logged out");
         }
 
 

@@ -15,6 +15,6 @@ class RemoveRankAction extends PermissionsAction
 
         $this->permissionsRepository->deleteRank($rankId);
 
-        return $this->response;
+        return $this->respondWithData("Rank removed");
     }
 }

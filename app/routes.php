@@ -29,7 +29,7 @@ return function (App $app) {
         $group->post('/login', LoginAuthAction::class);
         $group->post('/verify', VerifyTokenAction::class);
         $group->post('/logout', LogoutAuthAction::class)->add(AuthMiddleware::class);
-    });//->add(AuthMiddleware::class);
+    });
 
     $app->group('/players', function(Group $group) {
         $group->get('/getAllPlayers', GetAllPlayersAction::class);
@@ -48,7 +48,8 @@ return function (App $app) {
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
         $group->get('/getAllPermissionGroups', GetAllPermissionGroups::class);
-    })->add(PermissionsMiddleware::class);
+    })->add(AuthMiddleware::class)
+        ->add(PermissionsMiddleware::class);
 
     /**
      * Catch-all route to serve a 404 Not Found page if none of the routes match

@@ -16,7 +16,7 @@ class CreateNewRankAction extends PermissionsAction {
         $rankId = $this->permissionsRepository->createNewRank($name);
 
         if ($permissions == null) {
-            return $this->response;
+            return $this->respondWithData("Rank created without permissions");
         }
 
         foreach ($permissions as $permissionId) {
@@ -24,6 +24,6 @@ class CreateNewRankAction extends PermissionsAction {
         }
 
 
-        return $this->response;
+        return $this->respondWithData("Rank created");
     }
 }

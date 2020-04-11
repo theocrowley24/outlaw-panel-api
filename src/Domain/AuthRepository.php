@@ -49,7 +49,7 @@ class AuthRepository extends Repository {
         return $result['id'];
     }
 
-    public function checkToken(int $uid, string $authToken): bool {
+    public function checkToken(string $authToken): bool {
         return $_SESSION['accessToken'] === $authToken;
     }
 

@@ -20,15 +20,9 @@ class AuthMiddleware implements Middleware {
 
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        $uid = $request->getHeader('uid')[0];
         $accessToken = $request->getHeader('accessToken')[0];
 
-        if ($uid == null || $accessToken == null) {
-            $response = new Response();
-            return $response->withStatus(403);
-        } 
-
-        if (!$this->authRepository->checkToken(intval($uid), $accessToken)) {
+        if (!$this->authRepository->verifyToken($accessToken)) {
             $response = new Response();
             return $response->withStatus(403);
         }

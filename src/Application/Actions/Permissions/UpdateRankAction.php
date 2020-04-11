@@ -16,6 +16,6 @@ class UpdateRankAction extends PermissionsAction {
 
         $this->permissionsRepository->updateRank(intval($rankId), $data);
 
-        return $this->response;
+        return $this->respondWithData("Renamed");
     }
 }
