@@ -16,6 +16,7 @@ use App\Application\Actions\Permissions\UpdateRankPermissionsAction;
 use App\Application\Actions\Players\GetAllPlayersAction;
 use App\Application\Actions\Players\GetPlayerByIdAction;
 
+use App\Application\Actions\Players\UpdatePlayer;
 use App\Application\Middleware\AuthMiddleware;
 use App\Application\Middleware\PermissionsMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -34,6 +35,7 @@ return function (App $app) {
     $app->group('/players', function(Group $group) {
         $group->get('/getAllPlayers', GetAllPlayersAction::class);
         $group->post('/getPlayerById', GetPlayerByIdAction::class);
+        $group->post('/updatePlayer', UpdatePlayer::class);
     })->add(AuthMiddleware::class)
         ->add(PermissionsMiddleware::class);
 

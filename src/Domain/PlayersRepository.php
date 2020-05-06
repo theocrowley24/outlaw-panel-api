@@ -7,10 +7,19 @@ use FaaPz\PDO\Database;
 use FaaPz\PDO\Clause\Conditional;
 
 class PlayersRepository extends Repository {
+    public function updatePlayer(int $id, array $data) {
+        $statement = $this->database
+            ->update($data)
+            ->table('`takistan-players`')
+            ->where(new Conditional("id", "=", $id));
+
+        $statement->execute();
+    }
+
     public function getAllPlayers(): array {
         $statement = $this->database
         ->select(array('*'))
-        ->from('players');
+        ->from('`takistan-players`');
 
         $result = $statement->execute()->fetchAll();
 
@@ -20,7 +29,7 @@ class PlayersRepository extends Repository {
     public function getPlayerById(int $id): array {
         $statement = $this->database
         ->select(array('*'))
-        ->from('players')
+        ->from('`takistan-players`')
         ->where(new Conditional('id', '=', $id));
 
         $result = $statement->execute()->fetch();
