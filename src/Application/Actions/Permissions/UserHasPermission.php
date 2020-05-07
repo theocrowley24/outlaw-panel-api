@@ -11,7 +11,7 @@ class UserHasPermission extends PermissionsAction
     protected function action(): Response
     {
         $parsedBody = $this->request->getParsedBody();
-        $userId = $parsedBody["userId"];
+        $userId = $_COOKIE['uid'];
         $permissionId = $parsedBody["permissionId"];
 
         $hasPermission = $this->permissionsRepository->userHasPermission(intval($userId), intval($permissionId));
