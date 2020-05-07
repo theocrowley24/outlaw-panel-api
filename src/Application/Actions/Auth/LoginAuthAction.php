@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Auth;
 
+use Slim\Psr7\Response as Psr7Response;
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 
@@ -13,23 +15,31 @@ class LoginAuthAction extends AuthAction {
         $password = $parsedBody['password'];
 
         if (!$username || !$password) {
-            $this->respondWithData("Failed");
+            $response = new Psr7Response();
+            $response->withStatus(401);
+            $response->getBody()->write(json_encode(array("message" => "Failed to login")));
+            return $response;
         }
 
         if (!$this->authRepository->login($username, $password)) {
-            return $this->respondWithData("Failed to login");
+            $response = new Psr7Response();
+            $response->withStatus(401);
+            $response->getBody()->write(json_encode(array("message" => "Failed to login")));
+            return $response;
         }
 
-        $_SESSION['token'] = $this->authRepository->getToken();
+        if ($this->authRepository->login($username, $password)) {
+            $_SESSION['token'] = $this->authRepository->getToken();
 
-        /*
-        $data['uid'] = $this->authRepository->getUid($username);
-        $data['accessToken'] = $this->authRepository->getToken();
-        */
+            setcookie("authToken", (string)$_SESSION['token'],time()+3600, "/");
+            setcookie("uid", (string)$this->authRepository->getUid($username),time()+3600, "/");
 
-        setcookie("authToken", (string)$_SESSION['token'],time()+3600, "/");
-        setcookie("uid", (string)$this->authRepository->getUid($username),time()+3600, "/");
+            return $this->respondWithData("Logged in");
+        }
 
-        return $this->respondWithData("Logged in");
+        $response = new Psr7Response();
+        $response->withStatus(401);
+        $response->getBody()->write(json_encode(array("message" => "Failed to login")));
+        return $response;
     }
 }

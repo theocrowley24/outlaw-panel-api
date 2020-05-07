@@ -16,6 +16,10 @@ class AuthRepository extends Repository {
 
         $result = $statement->execute()->fetch();
 
+        if ($statement->execute()->rowCount() === 0) {
+            return false;
+        }
+
         if (!password_verify($password, $result['password_hashed'])) {
             return false;
         }
@@ -46,7 +50,7 @@ class AuthRepository extends Repository {
 
         $result = $statement->execute()->fetch();
 
-        return $result['id'];
+        return $result['id'] !== null ? $result['id'] : -1;
     }
 
     public function checkToken(string $authToken): bool {
