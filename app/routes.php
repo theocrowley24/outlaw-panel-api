@@ -13,6 +13,7 @@ use App\Application\Actions\Permissions\GetAllRanksAction;
 use App\Application\Actions\Permissions\GetUserRankAction;
 use App\Application\Actions\Permissions\UpdateRankAction;
 use App\Application\Actions\Permissions\UpdateRankPermissionsAction;
+use App\Application\Actions\Permissions\UserHasPermission;
 use App\Application\Actions\Players\GetAllPlayersAction;
 use App\Application\Actions\Players\GetPlayerByIdAction;
 
@@ -46,6 +47,7 @@ return function (App $app) {
         //$group->post('/getAllRankPermissions', GetAllRankPermissionsAction::class);
         $group->post('/getAllPermissionsWithRank', GetAllPermissionsWithRank::class);
         $group->post('/getUsersRank', GetUserRankAction::class);
+        $group->post('/userHasPermission', UserHasPermission::class);
 
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);
