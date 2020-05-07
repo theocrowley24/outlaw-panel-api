@@ -14,7 +14,7 @@ class UserHasPermission extends PermissionsAction
         $userId = $parsedBody["userId"];
         $permissionId = $parsedBody["permissionId"];
 
-        $hasPermission = $this->permissionsRepository->userHasPermission($userId, $permissionId);
+        $hasPermission = $this->permissionsRepository->userHasPermission(intval($userId), intval($permissionId));
 
         return $this->respondWithData(array("hasPermission" => $hasPermission));
     }

@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 
 class LogoutAuthAction extends AuthAction {
+    //TODO Add cookie support
     protected function action(): Response {
         $parsedBody = $this->request->getParsedBody();
         $uid = $parsedBody['uid'];

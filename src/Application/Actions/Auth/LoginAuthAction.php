@@ -22,9 +22,14 @@ class LoginAuthAction extends AuthAction {
 
         $_SESSION['token'] = $this->authRepository->getToken();
 
+        /*
         $data['uid'] = $this->authRepository->getUid($username);
         $data['accessToken'] = $this->authRepository->getToken();
+        */
 
-        return $this->respondWithData($data);
+        setcookie("authToken", (string)$_SESSION['token'],time()+3600, "/");
+        setcookie("uid", (string)$this->authRepository->getUid($username),time()+3600, "/");
+
+        return $this->respondWithData("Logged in");
     }
 }

@@ -23,8 +23,9 @@ class PermissionsMiddleware implements Middleware {
         $route = $request->getUri()->getPath();
 
         $permissionId = $this->permissionsRepository->getPermissionId($route);
-        $userId = intval($request->getHeader("uid")[0]);
-        $rankId = intval($this->permissionsRepository->getRankId($userId));
+        //$userId = intval($request->getHeader("uid")[0]);
+        $userId = $_COOKIE['uid'];
+        $rankId = intval($this->permissionsRepository->getRankId(intval($userId)));
 
         if ($this->permissionsRepository->rankHasPermission($rankId, $permissionId)) {
             return $handler->handle($request);

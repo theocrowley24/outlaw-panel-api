@@ -29,7 +29,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 return function (App $app) {
     $app->group('/auth', function (Group $group) {
         $group->post('/login', LoginAuthAction::class);
-        $group->post('/verify', VerifyTokenAction::class);
+        $group->get('/verify', VerifyTokenAction::class);
         $group->post('/logout', LogoutAuthAction::class)->add(AuthMiddleware::class);
     });
 

@@ -20,7 +20,8 @@ class AuthMiddleware implements Middleware {
 
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        $accessToken = $request->getHeader('accessToken')[0];
+        //$accessToken = $request->getHeader('accessToken')[0];
+        $accessToken = $_COOKIE['authToken'];
 
         if (!$this->authRepository->verifyToken($accessToken)) {
             $response = new Response();

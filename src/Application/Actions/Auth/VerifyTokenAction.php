@@ -10,8 +10,8 @@ class VerifyTokenAction extends AuthAction
 {
     protected function action(): Response
     {
-        $parsedBody = $this->request->getParsedBody();
+        $authToken = $_COOKIE['authToken'];
 
-        return $this->respondWithData($this->authRepository->verifyToken($parsedBody['accessToken']));
+        return $this->respondWithData(array("verified" => $authToken === $_SESSION['token']));
     }
 }
