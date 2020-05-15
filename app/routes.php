@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Application\Actions\Auth\GetMyInfoAction;
 use App\Application\Actions\Auth\LoginAuthAction;
 use App\Application\Actions\Auth\LogoutAuthAction;
 use App\Application\Actions\Auth\VerifyTokenAction;
@@ -18,6 +19,10 @@ use App\Application\Actions\Players\GetAllPlayersAction;
 use App\Application\Actions\Players\GetPlayerByIdAction;
 
 use App\Application\Actions\Players\UpdatePlayer;
+use App\Application\Actions\Users\GetAllUsersAction;
+use App\Application\Actions\Users\GetUserByIdAction;
+use App\Application\Actions\Users\UpdateUserAction;
+use App\Application\Actions\Vehicles\GetAllVehiclesAction;
 use App\Application\Middleware\AuthMiddleware;
 use App\Application\Middleware\PermissionsMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -30,13 +35,25 @@ return function (App $app) {
     $app->group('/auth', function (Group $group) {
         $group->post('/login', LoginAuthAction::class);
         $group->get('/verify', VerifyTokenAction::class);
+        $group->get('/getMyInfo', GetMyInfoAction::class);
         $group->post('/logout', LogoutAuthAction::class)->add(AuthMiddleware::class);
+    });
+
+    $app->group('/users', function (Group $group) {
+       $group->get('/getAllUsers', GetAllUsersAction::class);
+       $group->post('/getUserById', GetUserByIdAction::class);
+       $group->post('/updateUser', UpdateUserAction::class);
     });
 
     $app->group('/players', function(Group $group) {
         $group->get('/getAllPlayers', GetAllPlayersAction::class);
         $group->post('/getPlayerById', GetPlayerByIdAction::class);
         $group->post('/updatePlayer', UpdatePlayer::class);
+    })->add(AuthMiddleware::class)
+        ->add(PermissionsMiddleware::class);
+
+    $app->group('/vehicles', function (Group $group) {
+        $group->get('/getAllVehicles', GetAllVehiclesAction::class);
     })->add(AuthMiddleware::class)
         ->add(PermissionsMiddleware::class);
 

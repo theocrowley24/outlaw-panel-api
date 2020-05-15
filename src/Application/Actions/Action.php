@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Psr7\Response as Psr7Response;
 
 abstract class Action
 {
@@ -116,5 +117,12 @@ abstract class Action
         $json = json_encode($payload, JSON_PRETTY_PRINT);
         $this->response->getBody()->write($json);
         return $this->response->withHeader('Content-Type', 'application/json');
+    }
+
+    protected function generateResponse(int $code, array $body) {
+        $response = new Psr7Response();
+        $response->withStatus($code);
+        $response->getBody()->write(json_encode($body));
+        return $response;
     }
 }

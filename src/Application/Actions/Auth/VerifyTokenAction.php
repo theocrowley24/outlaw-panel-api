@@ -11,14 +11,14 @@ class VerifyTokenAction extends AuthAction
 {
     protected function action(): Response
     {
-        $authToken = $_COOKIE['authToken'];
-
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || !isset($_COOKIE['authToken'])) {
             $response = new Psr7Response();
             $response->withStatus(401);
             $response->getBody()->write(json_encode(array("message" => "Failed to verify. Please login.")));
             return $response;
         }
+
+        $authToken = $_COOKIE['authToken'];
 
         return $this->respondWithData(array("verified" => $authToken === $_SESSION['token']));
     }

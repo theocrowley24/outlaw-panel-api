@@ -8,6 +8,15 @@ use App\Domain\Repository;
 use FaaPz\PDO\Clause\Conditional;
 
 class AuthRepository extends Repository {
+    public function getMyInfo(int $userId): array {
+        $statement = $this->database
+            ->select(array("username"))
+            ->from("users")
+            ->where(new Conditional("id", "=", $userId));
+
+        return $statement->execute()->fetch();
+    }
+
     public function login(string $username, string $password): bool {
         $statement = $this->database
         ->select(array("*"))

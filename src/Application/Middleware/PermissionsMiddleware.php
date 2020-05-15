@@ -10,6 +10,7 @@ use Psr\Http\Server\MiddlewareInterface as Middleware;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 use App\Domain\PermissionsRepository;
+use Slim\Psr7\Response as Psr7Response;
 
 class PermissionsMiddleware implements Middleware {
     private $permissionsRepository;
@@ -24,6 +25,14 @@ class PermissionsMiddleware implements Middleware {
 
         $permissionId = $this->permissionsRepository->getPermissionId($route);
         //$userId = intval($request->getHeader("uid")[0]);
+
+        if (!isset($_COOKIE['uid'])) {
+            $response = new Psr7Response();
+            $response->withStatus(401);
+            $response->getBody()->write(json_encode(array("message" => "Session expired. Please log in again.")));
+            return $response;
+        }
+
         $userId = $_COOKIE['uid'];
         $rankId = intval($this->permissionsRepository->getRankId(intval($userId)));
 
