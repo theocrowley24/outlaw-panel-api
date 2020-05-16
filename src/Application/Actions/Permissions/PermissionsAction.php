@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Actions\Permissions;
@@ -8,13 +12,15 @@ use App\Domain\PermissionsRepository;
 use Psr\Log\LoggerInterface;
 
 
-abstract class PermissionsAction extends Action {
+abstract class PermissionsAction extends Action
+{
     protected $permissionsRepository;
 
-    public function __construct(LoggerInterface $logger, PermissionsRepository $permissionsRepository) {
+    public function __construct(LoggerInterface $logger, PermissionsRepository $permissionsRepository)
+    {
         parent::__construct($logger);
         $this->permissionsRepository = $permissionsRepository;
     }
 
-    
+
 }

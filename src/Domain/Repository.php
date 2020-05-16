@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Domain;
@@ -6,7 +10,8 @@ namespace App\Domain;
 use FaaPz\PDO\Database;
 use FaaPz\PDO\Clause\Conditional;
 
-class Repository {
+class Repository
+{
     protected $database;
 
     public function __construct()

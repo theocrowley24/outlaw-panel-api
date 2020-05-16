@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Handlers;
@@ -27,15 +31,16 @@ class ShutdownHandler
     /**
      * ShutdownHandler constructor.
      *
-     * @param Request       $request
+     * @param Request $request
      * @param $errorHandler $errorHandler
-     * @param bool          $displayErrorDetails
+     * @param bool $displayErrorDetails
      */
     public function __construct(
         Request $request,
         HttpErrorHandler $errorHandler,
         bool $displayErrorDetails
-    ) {
+    )
+    {
         $this->request = $request;
         $this->errorHandler = $errorHandler;
         $this->displayErrorDetails = $displayErrorDetails;

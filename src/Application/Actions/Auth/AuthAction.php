@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Actions\Auth;
@@ -8,13 +12,15 @@ use App\Domain\AuthRepository;
 use Psr\Log\LoggerInterface;
 
 
-abstract class AuthAction extends Action {
+abstract class AuthAction extends Action
+{
     protected $authRepository;
 
-    public function __construct(LoggerInterface $logger, AuthRepository $authRepository) {
+    public function __construct(LoggerInterface $logger, AuthRepository $authRepository)
+    {
         parent::__construct($logger);
         $this->authRepository = $authRepository;
     }
 
-    
+
 }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Middleware;
@@ -12,10 +16,12 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use App\Domain\PermissionsRepository;
 use Slim\Psr7\Response as Psr7Response;
 
-class PermissionsMiddleware implements Middleware {
+class PermissionsMiddleware implements Middleware
+{
     private $permissionsRepository;
 
-    public function __construct(PermissionsRepository $permissionsRepository) {
+    public function __construct(PermissionsRepository $permissionsRepository)
+    {
         $this->permissionsRepository = $permissionsRepository;
     }
 

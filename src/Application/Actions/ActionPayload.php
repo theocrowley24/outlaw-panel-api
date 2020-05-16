@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Actions;
@@ -23,15 +27,16 @@ class ActionPayload implements JsonSerializable
     private $error;
 
     /**
-     * @param int                   $statusCode
-     * @param array|object|null     $data
-     * @param ActionError|null      $error
+     * @param int $statusCode
+     * @param array|object|null $data
+     * @param ActionError|null $error
      */
     public function __construct(
         int $statusCode = 200,
         $data = null,
         ?ActionError $error = null
-    ) {
+    )
+    {
         $this->statusCode = $statusCode;
         $this->data = $data;
         $this->error = $error;

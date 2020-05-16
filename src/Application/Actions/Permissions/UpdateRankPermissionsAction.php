@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020, Theo Crowley. All rights reserved.
+ */
+
 declare(strict_types=1);
 
 namespace App\Application\Actions\Permissions;
@@ -18,7 +22,7 @@ class UpdateRankPermissionsAction extends PermissionsAction
         $this->permissionsRepository->removeAllPermissions(intval($rankId));
 
         // Adds all new permissions in
-        foreach($permissions as $permissionId) {
+        foreach ($permissions as $permissionId) {
             $this->permissionsRepository->addPermissionToRank($permissionId, intval($rankId));
         }
 
