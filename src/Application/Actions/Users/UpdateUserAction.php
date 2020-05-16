@@ -10,6 +10,13 @@ class UpdateUserAction extends UsersAction
 {
     protected function action(): Response
     {
-        return null;
+        $parsedBody = $this->request->getParsedBody();
+        $userId = $parsedBody['id'];
+        $data = $parsedBody['data'];
+
+        $this->usersRepository->updateUser($userId, $data);
+
+
+        return $this->generateResponse(200, array("message" => "Updated user successfully"));
     }
 }

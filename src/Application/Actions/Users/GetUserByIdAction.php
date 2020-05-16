@@ -10,6 +10,9 @@ class GetUserByIdAction extends UsersAction
 {
     protected function action(): Response
     {
-        return null;
+        $parsedBody = $this->request->getParsedBody();
+        $userId = $parsedBody['id'];
+
+        return $this->respondWithData($this->usersRepository->getUserById($userId));
     }
 }

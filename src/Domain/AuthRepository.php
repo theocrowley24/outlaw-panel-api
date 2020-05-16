@@ -62,10 +62,6 @@ class AuthRepository extends Repository {
         return $result['id'] !== null ? $result['id'] : -1;
     }
 
-    public function checkToken(string $authToken): bool {
-        return $_SESSION['accessToken'] === $authToken;
-    }
-
     public function verifyToken(string $authToken): bool {
         return $_SESSION['accessToken'] === $authToken;
     }
