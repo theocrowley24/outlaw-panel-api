@@ -16,9 +16,12 @@ class UpdatePlayer extends PlayersAction
         "lastName" => "last_name",
         "cash" => "cash",
         "bank" => "bank",
-        "profession" => "profession",
+        "dirty" => "dirty",
         "gear" => "gear",
         "natoRank" => "NATO_rank",
+        "xp" => "xp",
+        "level" => "level",
+        "rcRank" => "RC_rank",
         "alive" => "alive",
         "adminlevel" => "adminlevel"
     );

@@ -16,7 +16,7 @@ class PlayersRepository extends Repository
     {
         $statement = $this->database
             ->update($data)
-            ->table('`takistan-players`')
+            ->table('`players`')
             ->where(new Conditional("id", "=", $id));
 
         $statement->execute();
@@ -26,7 +26,7 @@ class PlayersRepository extends Repository
     {
         $statement = $this->database
             ->select(array('*'))
-            ->from('`takistan-players`');
+            ->from('`players`');
 
         $result = $statement->execute()->fetchAll();
 
@@ -37,7 +37,7 @@ class PlayersRepository extends Repository
     {
         $statement = $this->database
             ->select(array('*'))
-            ->from('`takistan-players`')
+            ->from('`players`')
             ->where(new Conditional('id', '=', $id));
 
         $result = $statement->execute()->fetch();

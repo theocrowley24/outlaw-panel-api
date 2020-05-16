@@ -14,7 +14,7 @@ class VehiclesRepository extends Repository
     {
         $statement = $this->database
             ->select(array("*"))
-            ->from("`takistan-vehicles`");
+            ->from("`vehicles`");
 
         $result = $statement->execute()->fetchAll();
 
