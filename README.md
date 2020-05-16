@@ -1,23 +1,9 @@
-# Slim Framework 4 Skeleton Application
+# Outlaw Panel by Theo Crowley
+An administrative database tool designed for a custom Arma 3 mission. Includes an advanced permission and user group system as well as administrative functionality to safely modify a MySQL database. This is the frontend repository.
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+Written in React with TypeScript and SASS. Backend API written in PHP Slim.
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
-
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
-
-## Install the Application
-
-Run this command from the directory in which you want to install your new Slim Framework application.
-
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
-
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
-
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+# Slim Framework 4 Application
 
 To run the application in development, you can run these commands 
 
