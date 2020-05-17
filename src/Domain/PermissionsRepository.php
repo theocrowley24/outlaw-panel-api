@@ -178,7 +178,6 @@ class PermissionsRepository extends Repository
             if ($permissions[$i]["permission_id"] == $permissionId) {
                 return true;
             }
-
         }
 
         return false;

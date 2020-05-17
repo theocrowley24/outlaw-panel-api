@@ -11,7 +11,20 @@ use FaaPz\PDO\Clause\Join;
 
 class UsersRepository extends Repository
 {
-    public function updateUser(int $id, array $data)
+    public function createUser(array $data): bool {
+        $username = $data["username"];
+        $password = $data["password"];
+        $rankId = $data["rankId"];
+
+        $statement = $this->database
+            ->insert(array("username" => $username, "password_hashed" => password_hash($password, PASSWORD_DEFAULT), "rank_id" => $rankId))
+            ->into("users");
+
+        return $statement->execute() >= 0;
+    }
+
+
+    public function updateUser(int $id, array $data): bool
     {
         if (isset($data["reset_password"]) && !empty($data["reset_password"])) {
             $password = password_hash($data["reset_password"], PASSWORD_DEFAULT);
@@ -22,7 +35,7 @@ class UsersRepository extends Repository
                 ->table("users")
                 ->where(new Conditional("id", "=", $id));
 
-            $statement->execute();
+            return $statement->execute() >= 0;
         }
 
         unset($data["reset_password"]);
@@ -34,7 +47,7 @@ class UsersRepository extends Repository
             ->table("users")
             ->where(new Conditional("id", "=", $id));
 
-        $statement->execute();
+        return $statement->execute() >= 0;
     }
 
     public function getAllUsers(): array

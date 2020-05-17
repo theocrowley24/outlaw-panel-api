@@ -23,6 +23,7 @@ use App\Application\Actions\Players\GetAllPlayersAction;
 use App\Application\Actions\Players\GetPlayerByIdAction;
 
 use App\Application\Actions\Players\UpdatePlayer;
+use App\Application\Actions\Users\CreateUserAction;
 use App\Application\Actions\Users\GetAllUsersAction;
 use App\Application\Actions\Users\GetUserByIdAction;
 use App\Application\Actions\Users\UpdateUserAction;
@@ -47,7 +48,9 @@ return function (App $app) {
        $group->get('/getAllUsers', GetAllUsersAction::class);
        $group->post('/getUserById', GetUserByIdAction::class);
        $group->post('/updateUser', UpdateUserAction::class);
-    });
+       $group->post('/createUser', CreateUserAction::class);
+    })->add(AuthMiddleware::class)
+        ->add(PermissionsMiddleware::class);
 
     $app->group('/players', function(Group $group) {
         $group->get('/getAllPlayers', GetAllPlayersAction::class);

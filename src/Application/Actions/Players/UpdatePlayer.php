@@ -34,7 +34,11 @@ class UpdatePlayer extends PlayersAction
 
         $convertedColumnNames = array();
         foreach ($data as $key => $value) {
-            $convertedColumnNames[$this->columnNames[$key]] = $value;
+            if (isset($this->columnNames[$key])) {
+                $convertedColumnNames[$this->columnNames[$key]] = $value;
+            } else {
+                return $this->generateResponse(406, array("message" => "Invalid update request."));
+            }
         }
 
         $this->playersRepository->updatePlayer($playerId, $convertedColumnNames);
