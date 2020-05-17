@@ -10,6 +10,7 @@ use App\Application\Actions\Auth\LoginAuthAction;
 use App\Application\Actions\Auth\LogoutAuthAction;
 use App\Application\Actions\Auth\VerifyTokenAction;
 use App\Application\Actions\Permissions\CreateNewRankAction;
+use App\Application\Actions\Permissions\DoIHavePermissionAction;
 use App\Application\Actions\Permissions\GetAllPermissionGroups;
 use App\Application\Actions\Permissions\GetAllPermissionsAction;
 use App\Application\Actions\Permissions\GetAllPermissionsWithRank;
@@ -72,6 +73,7 @@ return function (App $app) {
         $group->post('/getAllPermissionsWithRank', GetAllPermissionsWithRank::class);
         $group->post('/getUsersRank', GetUserRankAction::class);
         $group->post('/userHasPermission', UserHasPermission::class);
+        $group->post('/doIHavePermission', DoIHavePermissionAction::class);
 
         $group->get('/getAllPermissions', GetAllPermissionsAction::class);
         $group->get('/getAllRanks', GetAllRanksAction::class);

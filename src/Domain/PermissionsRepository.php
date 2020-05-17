@@ -15,6 +15,24 @@ use FaaPz\PDO\Clause\Conditional;
 
 class PermissionsRepository extends Repository
 {
+    public function doIHavePermission(int $userId, int $permissionId): bool {
+        $result = $this->database->query("SELECT rp.*
+            FROM rank_permissions rp
+            JOIN users u ON u.id = $userId
+            WHERE 
+                rp.rank_id = u.rank_id AND 
+                rp.permission_id = $permissionId 
+                AND rp.inactive=0")->fetchAll();
+
+        $rows = count($result);
+
+        if ($rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function userHasPermission(int $userId, int $permissionId): bool
     {
         $result = $this->database->query("SELECT rp.*
